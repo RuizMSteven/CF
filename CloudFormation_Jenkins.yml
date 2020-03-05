@@ -1,0 +1,48 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Steven Testing EC2 Stack
+Parameters:
+  InstanceType:
+    Description: Steven Testing EC2
+    Type: String
+    Default: t2.micro
+    AllowedValues:
+      - t2.nano
+      - t2.micro	
+      - t2.small	
+      - t2.medium	
+      - t2.large	
+      - t2.xlarge	
+      - t2.2xlarge
+  Subnet:
+    Description: Choose the subnet for this Instance
+    Type: AWS::EC2::Subnet::Id
+  ServerName:
+    Type: String
+  AMI:
+    Type: String
+    Description: Enter AMI ID
+    Default: ami-0e19d4d4908d15736
+  SecurityGroup:
+    Type: AWS::EC2::SecurityGroup::Id
+    Description: Select appropriate OS Security Group and Systems Common Security Group.
+  EnvironmentType: 
+    Description: The environment type
+    Type: String 
+    AllowedValues:
+      - prod
+      - test
+      - dr
+      - dev
+    ConstraintDescription: Must be prod, dev, test, dr
+Resources:
+   EC2:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: 
+        Ref: InstanceType
+      SecurityGroupIds: 
+        - !Ref SecurityGroup
+      ImageId: !Ref AMI  
+      SubnetId: !Ref Subnet
+
+
